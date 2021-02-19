@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import NewTodoForm from "./NewTodoForm";
+import TodoList from "./TodoList";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
+  const todos = useSelector((store) => store.todos);
+  const dispatch = useDispatch();
+
+  function add(newTodo) {
+    dispatch({ type: "ADD", todo: newTodo });
+  }
+
+  function remove(id) {
+    dispatch({ type: "REMOVE", id });
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NewTodoForm addTodo={add} />
+      <TodoList todos={todos} removeTodo={remove} />
     </div>
   );
 }
